@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-cost-poller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloud-cost-poller
+  template:
+    metadata:
+      labels:
+        app: cloud-cost-poller
+    spec:
+      containers:
+      - name: poller
+        image: {{ .Values.poller.image }}
+        env:
+        - name: AWS_ROLES
+          value: "{{ .Values.poller.env.AWS_ROLES }}"
+        - name: POSTGRES_HOST
+          value: "{{ .Values.poller.env.POSTGRES_HOST }}"
+        - name: POSTGRES_PORT
+          value: "{{ .Values.poller.env.POSTGRES_PORT }}"
+        - name: POSTGRES_DB
+          value: "{{ .Values.poller.env.POSTGRES_DB }}"
+        - name: POSTGRES_USER
+          value: "{{ .Values.poller.env.POSTGRES_USER }}"
+        - name: POSTGRES_PASSWORD
+          value: "{{ .Values.poller.env.POSTGRES_PASSWORD }}" 

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: powerpipe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: powerpipe
+  template:
+    metadata:
+      labels:
+        app: powerpipe
+    spec:
+      containers:
+      - name: powerpipe
+        image: cloud-cost-compass/powerpipe:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9033
+        env:
+        - name: STEAMPIPE_DATABASE_CONNECTION_STRING
+          value: "postgresql://steampipe@steampipe:9193/steampipe"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: powerpipe
+spec:
+  selector:
+    app: powerpipe
+  type: LoadBalancer # Or NodePort/ClusterIP based on need
+  ports:
+  - port: 9033
+    targetPort: 9033

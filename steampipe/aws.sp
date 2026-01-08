@@ -1,0 +1,3 @@
+connection "aws" {
+  plugin = "aws"
+}

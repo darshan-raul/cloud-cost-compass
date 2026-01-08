@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: steampipe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: steampipe
+  template:
+    metadata:
+      labels:
+        app: steampipe
+    spec:
+      containers:
+      - name: steampipe
+        image: cloud-cost-compass/steampipe:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9193
+        env:
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+             secretKeyRef:
+               name: cloud-cost-secrets
+               key: AWS_ACCESS_KEY_ID
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+             secretKeyRef:
+               name: cloud-cost-secrets
+               key: AWS_SECRET_ACCESS_KEY
+        # Add other envs as needed for Azure/GCP mapping
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: steampipe
+spec:
+  selector:
+    app: steampipe
+  ports:
+  - port: 9193
+    targetPort: 9193

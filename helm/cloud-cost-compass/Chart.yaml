@@ -1,4 +1,0 @@
-apiVersion: v2
-name: cloud-cost-compass
-version: 0.1.0
-description: A Helm chart for deploying the Cloud Cost Compass poller and dashboard 

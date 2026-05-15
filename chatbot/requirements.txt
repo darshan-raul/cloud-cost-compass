@@ -1,8 +1,0 @@
-fastapi
-uvicorn
-langchain
-langchain-openai
-langchain-community
-psycopg2-binary
-python-multipart
-# Pydantic is already pulled by fastapi

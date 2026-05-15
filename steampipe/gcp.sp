@@ -1,3 +1,0 @@
-connection "gcp" {
-  plugin = "gcp"
-}

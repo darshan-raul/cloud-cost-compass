@@ -1,0 +1,34 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: cloud-cost-compass-gateway
+  namespace: cloud-cost-compass
+spec:
+  gatewayClassName: envoy
+  listeners:
+  - name: https
+    port: 443
+    protocol: HTTPS
+    tls:
+      mode: Passthrough
+  - name: http
+    port: 80
+    protocol: HTTP
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: streamlit-route
+  namespace: cloud-cost-compass
+spec:
+  parentRefs:
+  - name: cloud-cost-compass-gateway
+    namespace: cloud-cost-compass
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: streamlit
+      port: 8501

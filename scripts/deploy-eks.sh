@@ -32,7 +32,7 @@ echo "Waiting for deployments..."
 kubectl rollout status deployment/vault -n $NAMESPACE
 kubectl rollout status deployment/keycloak -n $NAMESPACE
 kubectl rollout status deployment/mcp-server -n $NAMESPACE
-kubectl rollout status deployment/streamlit-app -n $NAMESPACE
+kubectl rollout status deployment/app -n $NAMESPACE
 kubectl rollout status deployment/rag-service -n $NAMESPACE
 kubectl rollout status deployment/qdrant -n $NAMESPACE
 

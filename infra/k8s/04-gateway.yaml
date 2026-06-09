@@ -6,11 +6,6 @@ metadata:
 spec:
   gatewayClassName: envoy
   listeners:
-  - name: https
-    port: 443
-    protocol: HTTPS
-    tls:
-      mode: Passthrough
   - name: http
     port: 80
     protocol: HTTP
@@ -18,7 +13,7 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: streamlit-route
+  name: app-route
   namespace: cloud-cost-compass
 spec:
   parentRefs:
@@ -30,5 +25,5 @@ spec:
         type: PathPrefix
         value: /
     backendRefs:
-    - name: streamlit
-      port: 8501
+    - name: app
+      port: 8080
